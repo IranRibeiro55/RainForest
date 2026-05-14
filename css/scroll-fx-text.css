@@ -1,0 +1,234 @@
+/**
+ * Texto ligado ao scroll (Scroll-driven animations, `view()` timeline).
+ * Separado de `animations.css` (loops / hero) para não misturar comportamentos.
+ */
+
+@keyframes scrollFxTitleTrack {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0) scale(0.985);
+    filter: blur(12px);
+    letter-spacing: 0.18em;
+  }
+  22% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+    letter-spacing: 2px;
+  }
+  78% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+    letter-spacing: 2px;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -0.42em, 0) scale(0.98);
+    filter: blur(8px);
+    letter-spacing: 0.06em;
+  }
+}
+
+@keyframes scrollFxHeroTitleTrack {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0.4em, 0) scale(0.985);
+    filter: blur(10px);
+    letter-spacing: 0.1em;
+  }
+  20% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+    letter-spacing: -0.025em;
+  }
+  72% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+    letter-spacing: -0.025em;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -0.32em, 0) scale(0.98);
+    filter: blur(7px);
+    letter-spacing: 0.04em;
+  }
+}
+
+@keyframes scrollFxLabelTrack {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  28% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  76% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes scrollFxDescTrack {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    filter: blur(5px);
+  }
+  30% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+  74% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+    filter: blur(4px);
+  }
+}
+
+/* Secções: só animação de entrada — evita sumir/blur ao sair da vista (saltava entre blocos) */
+@keyframes scrollFxSectionTitleTrack {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0) scale(0.985);
+    filter: blur(12px);
+    letter-spacing: 0.18em;
+  }
+  28% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+    letter-spacing: 2px;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+    letter-spacing: 2px;
+  }
+}
+
+@keyframes scrollFxSectionLabelTrack {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  32% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scrollFxSectionDescTrack {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    filter: blur(5px);
+  }
+  34% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@media (min-width: 1081px) {
+  @supports (animation-timeline: view()) {
+  .scroll-fx-title {
+    animation: scrollFxTitleTrack linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% exit 100%;
+  }
+
+  .scroll-fx-title.scroll-fx-title--hero {
+    animation-name: scrollFxHeroTitleTrack;
+    animation-range: entry 0% cover 58%;
+  }
+
+  .scroll-fx-label {
+    animation: scrollFxLabelTrack linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% exit 100%;
+  }
+
+  .scroll-fx-desc {
+    animation: scrollFxDescTrack linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% exit 100%;
+  }
+
+  .scroll-fx-desc.scroll-fx-desc--hero {
+    animation-range: entry 12% cover 52%;
+  }
+
+  /* Cabeçalhos de secção: cascata só na entrada (sem “apagar” ao mudar de secção) */
+  .section-head .scroll-fx-label {
+    animation-name: scrollFxSectionLabelTrack;
+    animation-range: entry 0% entry 100%;
+  }
+
+  .section-head .scroll-fx-title {
+    animation-name: scrollFxSectionTitleTrack;
+    animation-range: entry 0% entry 100%;
+  }
+
+  .section-head .scroll-fx-desc {
+    animation-name: scrollFxSectionDescTrack;
+    animation-range: entry 0% entry 100%;
+  }
+
+  .hero-copy .scroll-fx-title--hero {
+    animation-range: entry 0% cover 55%;
+  }
+
+  .hero-copy .scroll-fx-desc--hero {
+    animation-range: entry 14% cover 48%;
+  }
+  }
+}
+
+@media (max-width: 1080px) {
+  .scroll-fx-title,
+  .scroll-fx-label,
+  .scroll-fx-desc {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    letter-spacing: inherit !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fx-title,
+  .scroll-fx-label,
+  .scroll-fx-desc {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    letter-spacing: inherit !important;
+  }
+}

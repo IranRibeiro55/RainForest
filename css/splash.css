@@ -1,0 +1,269 @@
+/**
+ * Splash inicial — logo + vibe gamer (curto; respeita reduced-motion).
+ */
+html.rf-splash-pending,
+html.rf-splash-pending body {
+  overflow: hidden;
+  height: 100%;
+}
+
+.rf-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 20%, rgba(35, 167, 216, 0.12), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 12% 80%, rgba(40, 217, 87, 0.08), transparent 50%),
+    linear-gradient(180deg, #030806 0%, #07120e 45%, #050807 100%);
+  transition:
+    opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.5s;
+}
+
+.rf-splash__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 4vh, 28px);
+  width: min(92vw, 400px);
+}
+
+.rf-splash__crt {
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  opacity: 0.18;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.2) 2px,
+    rgba(0, 0, 0, 0.2) 3px
+  );
+  mix-blend-mode: multiply;
+  border-radius: 12px;
+}
+
+.rf-splash__grid {
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.rf-splash__logo-wrap {
+  position: relative;
+  padding: clamp(12px, 2vw, 20px);
+  border-radius: 20px;
+  background: rgba(5, 10, 8, 0.55);
+  border: 2px solid color-mix(in srgb, #28d957 35%, rgba(255, 255, 255, 0.12));
+  box-shadow:
+    0 0 0 2px rgba(2, 6, 4, 0.9),
+    0 0 40px rgba(40, 217, 87, 0.15),
+    0 0 60px rgba(24, 199, 232, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.rf-splash__logo {
+  display: block;
+  width: min(72vw, 260px);
+  height: auto;
+  image-rendering: auto;
+  filter: drop-shadow(0 0 20px rgba(60, 255, 115, 0.25));
+  animation: rfSplashLogoIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rf-splash__glitch {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 18px;
+  opacity: 0;
+  animation: rfSplashGlitch 2.8s steps(1, end) infinite;
+  box-shadow:
+    inset 2px 0 0 rgba(255, 60, 80, 0.35),
+    inset -2px 0 0 rgba(60, 200, 255, 0.35);
+}
+
+.rf-splash__bar {
+  width: 100%;
+  max-width: 280px;
+  height: 10px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.45);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.5),
+    0 0 0 2px rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.rf-splash__bar-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  border-radius: 3px;
+  background: linear-gradient(90deg, #18c7e8, #28d957, #f6c85f);
+  box-shadow: 0 0 14px rgba(40, 217, 87, 0.45);
+  animation: rfSplashBar 1.05s cubic-bezier(0.33, 1, 0.68, 1) 0.12s forwards;
+}
+
+.rf-splash__tag {
+  margin: 0;
+  font-family: 'Silkscreen', 'Barlow Condensed', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: rgba(186, 220, 200, 0.85);
+  text-transform: uppercase;
+  animation: rfSplashBlink 0.9s steps(1, end) infinite;
+}
+
+.rf-splash__dots {
+  display: flex;
+  gap: 6px;
+  margin-top: -8px;
+}
+
+.rf-splash__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: #28d957;
+  opacity: 0.35;
+  animation: rfSplashDot 1.2s ease-in-out infinite;
+}
+
+.rf-splash__dots span:nth-child(2) {
+  animation-delay: 0.15s;
+  background: #18c7e8;
+}
+
+.rf-splash__dots span:nth-child(3) {
+  animation-delay: 0.3s;
+  background: #f6c85f;
+}
+
+.rf-splash.rf-splash--done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(1.02);
+}
+
+@keyframes rfSplashLogoIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(12px);
+    filter: blur(8px) drop-shadow(0 0 0 transparent);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.04) translateY(0);
+    filter: blur(0) drop-shadow(0 0 24px rgba(60, 255, 115, 0.35));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 20px rgba(60, 255, 115, 0.25));
+  }
+}
+
+@keyframes rfSplashBar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes rfSplashGlitch {
+  0%,
+  92%,
+  100% {
+    opacity: 0;
+  }
+  93% {
+    opacity: 0.55;
+    transform: translateX(-2px);
+  }
+  94% {
+    opacity: 0.4;
+    transform: translateX(2px);
+  }
+  95% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes rfSplashBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes rfSplashDot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rf-splash {
+    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+  }
+
+  .rf-splash.rf-splash--done {
+    transform: none;
+  }
+
+  .rf-splash__logo,
+  .rf-splash__bar-fill,
+  .rf-splash__tag,
+  .rf-splash__dots span,
+  .rf-splash__glitch {
+    animation: none !important;
+  }
+
+  .rf-splash__logo {
+    opacity: 1;
+    transform: none;
+    filter: drop-shadow(0 0 12px rgba(40, 217, 87, 0.2));
+  }
+
+  .rf-splash__bar-fill {
+    transform: scaleX(1);
+  }
+
+  .rf-splash__tag {
+    opacity: 0.85;
+  }
+
+  .rf-splash__dots span {
+    opacity: 0.8;
+    transform: none;
+  }
+}

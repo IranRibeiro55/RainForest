@@ -1,0 +1,110 @@
+/**
+ * Parallax ao scroll — usa `--scroll-y` definido em `:root` e atualizado em `ScrollEffects.tsx`.
+ * Mantido separado de `globals.css` para leitura e manutenção.
+ */
+
+/* Clareira extra que desce com o scroll */
+.scroll-parallax-sheen {
+  position: fixed;
+  inset: -15%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.22;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 32%, color-mix(in srgb, #18c7e8 14%, transparent), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 18% 55%, color-mix(in srgb, #28d957 10%, transparent), transparent 58%);
+  mix-blend-mode: screen;
+  transform: translate3d(0, calc(var(--scroll-y, 0px) * 0.09), 0);
+  will-change: transform;
+}
+
+.brand-mascot {
+  transform: translate3d(0, calc(var(--scroll-y, 0px) * 0.045), 0) rotate(-2deg) scale(1.02);
+  will-change: transform;
+}
+
+#para-quem.for-who,
+.for-who {
+  /* Fundo fixo: parallax em calc() repintava toda a secção a cada frame de scroll (lag) */
+  background-position:
+    center,
+    center,
+    center 42%;
+}
+
+.for-who::before {
+  transform: none;
+  will-change: auto;
+}
+
+section#games.games-section::before {
+  background-position:
+    center,
+    center,
+    center,
+    center,
+    calc(50% + (var(--scroll-y, 0px) / 120)) 44%;
+  transform: translate3d(0, calc(var(--scroll-y, 0px) / 90), 0);
+  will-change: transform;
+}
+
+.game-media img {
+  object-position: center 72%;
+  transform: scale(1.08);
+}
+
+.game-card:hover .game-media img {
+  transform: scale(1.14);
+}
+
+html[data-performance='lite'] .scroll-parallax-sheen,
+html[data-performance='lite'] .brand-mascot,
+html[data-performance='lite'] .for-who::before,
+html[data-performance='lite'] section#games.games-section::before,
+html[data-performance='lite'] .game-media img,
+html[data-performance='lite'] .game-card:hover .game-media img {
+  transform: none !important;
+}
+
+html[data-performance='lite'] #para-quem.for-who,
+html[data-performance='lite'] .for-who {
+  background-position: center, center, center 42% !important;
+}
+
+html[data-performance='lite'] section#games.games-section::before {
+  background-position: center !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-parallax-sheen {
+    transform: none !important;
+    opacity: 0.12 !important;
+  }
+
+  .brand-mascot {
+    transform: rotate(-2deg) scale(1.02) !important;
+  }
+
+  #para-quem.for-who,
+  .for-who {
+    background-position: center, center, center 42% !important;
+  }
+
+  .for-who::before {
+    transform: none !important;
+  }
+
+  section#games.games-section::before {
+    transform: none !important;
+    background-position: center, center, center, center, center !important;
+  }
+
+  .game-media img {
+    transform: scale(1.08) !important;
+    object-position: center 72% !important;
+  }
+
+  .game-card:hover .game-media img {
+    transform: scale(1.14) !important;
+  }
+}
